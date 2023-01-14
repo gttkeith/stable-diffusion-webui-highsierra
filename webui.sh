@@ -155,15 +155,15 @@ else
     exit 1
 fi
 
-if [[ ! -z "${ACCELERATE}" ]] && [ ${ACCELERATE}="True" ] && [ -x "$(command -v accelerate)" ]
+if [[ ! -z "${ACCELERATE}" ]] && [ ${ACCELERATE}="False" ]
 then
-    printf "\n%s\n" "${delimiter}"
-    printf "Accelerating launch.py..."
-    printf "\n%s\n" "${delimiter}"
-    exec accelerate launch --num_cpu_threads_per_process=6 "${LAUNCH_SCRIPT}" "$@"
-else
     printf "\n%s\n" "${delimiter}"
     printf "Launching launch.py..."
     printf "\n%s\n" "${delimiter}"
     exec "${python_cmd}" "${LAUNCH_SCRIPT}" "$@"
+else
+    printf "\n%s\n" "${delimiter}"
+    printf "Accelerating launch.py..."
+    printf "\n%s\n" "${delimiter}"
+    exec accelerate launch --num_cpu_threads_per_process=6 "${LAUNCH_SCRIPT}" "$@"
 fi
